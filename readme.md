@@ -1,1 +1,2 @@
-repozytorium 1
+# repozytorium 1
+# autorzy: Zuzanna Warchala
