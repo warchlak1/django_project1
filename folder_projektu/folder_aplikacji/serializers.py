@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Person, Team, MONTHS, SHIRT_SIZES
+from .models import Person, Team, MONTHS, SHIRT_SIZES, Stanowisko, Osoba
 
 
 class PersonSerializer(serializers.Serializer):
@@ -46,3 +46,29 @@ class PersonSerializer(serializers.Serializer):
       #  fields = ['id', 'name', 'miesiac_dodania', 'shirt_size', 'team', 'pseudonim']
        # # definicja pola modelu tylko do odczytu
         #read_only_fields = ['id']
+
+class StanowiskoSerializer(serializers.Serializer):
+    nazwa = serializers.CharField(max_length = 80)
+    opis = serializers.CharField()
+
+    def __create(self, validated_data):
+        return Stanowisko.objects.create(**validated_data)
+    
+    def update(self, instance, validated_data):
+        instance.nazwa = validated_data.get('nazwa', instance.nazwa)
+        instance.opis = validated_data.get('opis', instance.opis)
+        instance.save()
+        return instance
+    
+class TeamSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Team
+        fields = ['id', 'name', 'country']
+        read_only_fields = ['id']
+
+class OsobaSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Osoba
+        fields = ['id', 'imie', 'nazwisko', 'plec', 'stanowisko', 'data_dodania']
+        read_only_fields = ['id', 'data_dodania']
+    
