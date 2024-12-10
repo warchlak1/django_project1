@@ -1,4 +1,6 @@
+from datetime import date
 from django.db import models
+from django.utils.timezone import now
 
 # Create your models here.
 
@@ -29,8 +31,8 @@ class Person(models.Model):
     team = models.ForeignKey(Team, null=True, blank=True, on_delete=models.SET_NULL)
 
     def __str__(self):
-        return self.name
-    
+        return f"Person: {self.name}, dodana w {self.month_added}, o rozmiarze koszuli {self.shirt_size}.\n"
+
 class Osoba(models.Model):
     PLEC_CHOICES = (
         ("K", "Kobieta"),
@@ -41,7 +43,7 @@ class Osoba(models.Model):
     nazwisko = models.CharField(max_length=60, blank=False, null=False)
     plec = models.IntegerField(choices=PLCIE.choices, default=PLCIE.choices[2][0])
     stanowisko = models.ForeignKey("Stanowisko", on_delete=models.CASCADE)
-    data_dodania = models.DateField(auto_now_add=True, editable=False)
+    data_dodania = models.DateField(default=date.today, blank=False, null=False)
 
     def __str__(self):
         return f'{self.imie} {self.nazwisko}'
@@ -55,3 +57,4 @@ class Stanowisko(models.Model):
 
     def __str__(self):
         return self.nazwa
+    
