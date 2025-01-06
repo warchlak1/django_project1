@@ -6,6 +6,8 @@ from . import views
 urlpatterns = [
     path('persons/', views.person_list),
     path('persons/<int:pk>/', views.person_detail),
+    path('persons/update/<int:pk>/', views.person_update),
+    path('persons/delete/<int:pk>/', views.person_delete),
     path('osoby/', views.osoba_list),
     path('osoby/<int:pk>/', views.osoba_details),
     path('osoby/search/<str:substring>/', views.osoba_search),
@@ -15,5 +17,6 @@ urlpatterns = [
     path('persons_html/', views.person_list_html),
     path('persons_html/<int:id>', views.person_detail_html, name="persons_html_detail"),
     path("persons_html/<int:id>", views.person_detail_html),
+    path('stanowisko/<int:pk>/members', views.StanowiskoMemberView.as_view()),
 
 ]
